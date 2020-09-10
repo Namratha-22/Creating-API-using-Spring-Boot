@@ -1,8 +1,8 @@
 
 Method	     API URL	           Operations
-Get	        /Courses	           Get all Courses
-Get	        /Courses/{id}     	 Get single course with ID
-Post	      /Courses	           Add new Course
+Get	     /Courses	   	   Get all Courses
+Get	     /Courses/{id}         Get single course with ID
+Post	     /Courses	           Add new Course
 
 Requirements  :
 Java IDE: STS
@@ -26,6 +26,7 @@ Steps:
 •	Run the application->Go to project->Run as Spring boot app
 •	Application is launched with Tomcat server port()(https)
 
+
 Create a controller:
 •	src/main/java->create a new class
 •	Source Folder:example/src/main/java
@@ -33,7 +34,6 @@ Create a controller:
 •	Name: MyController {name of your controller}
 •	Finish
 •	MyController.java package is created 
-
 •	Open MyController  and give annotation for the class as 
 
 @RestController
@@ -41,7 +41,7 @@ This will automatically import controller package.
 
 @GetMapping(“/home”) is to tell the method to execute when home is requested
 
- 	Code:
+Code:
 package com.example.example.controller;
 import java.util.List;
 
@@ -50,8 +50,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.example.entities.Course;
 import com.example.example.service.CourseService;
-
-
 
 @RestController
 public class MyController{
@@ -85,6 +83,8 @@ public Course addCourse(@RequestBody Course course)
 {
 	return this.courseservice.addCourse(course);
 }
+
+
 Create Entities
 •	src/main/java->create a new class
 •	Source Folder:example/src/main/java
@@ -92,7 +92,7 @@ Create Entities
 •	Name: Courses{name of your entity}
 •	Finish
 
- 	Code:
+Code:
 package com.springrest.springrest.entities;
 public class Course{
 	private long id;
@@ -118,8 +118,9 @@ Create Services and Create service Interface
 •	Add the above interface(CourseService)
 •	Finish
 
+
 CourseService.java 
- 	code
+code
 package com.example.example.services;
 import java.util.List;
 import com.example.example.entities.Courses;
@@ -129,8 +130,9 @@ public interface CourseService{
 	public Course getCourse(course_ID);
 	public Course addCourse(Course course);
 }
+
 CourseServiceImpl.java
- 	Code
+Code
 package com.example.example.services;
 import java.util.List;
 import java.util.ArrayList;
@@ -168,7 +170,7 @@ public class CourseServiceImpl implements CourseService{
 
 
 		
- 	PostMan	
+PostMan	
 Get localhost:8080/courses
 Get localhost:8080/courses/145
 Post localhost:8080/courses
