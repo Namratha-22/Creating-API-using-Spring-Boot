@@ -1,0 +1,178 @@
+
+Method	     API URL	           Operations
+Get	        /Courses	           Get all Courses
+Get	        /Courses/{id}     	 Get single course with ID
+Post	      /Courses	           Add new Course
+
+Requirements  :
+Java IDE: STS
+Postman
+Spring Initializer
+•	Webpage :Spring boot Initializer
+•	Project: Maven
+•	Language : Java
+•	Group : com.example
+•	Artifact: example
+•	Packaging: Jar
+•	Add Dependencies: Spring Web, MySQL driver, Spring Data JPA
+•	Generate
+•	JAR file is downloaded
+•	Extract JAR file
+
+Steps:
+•	Open STS ->File->Import->Maven(Search)
+•	Existing Maven Project->Next->Browse ->(Select the extracted file(home directory))
+•	pom.xml file will be selected ->finish
+•	Run the application->Go to project->Run as Spring boot app
+•	Application is launched with Tomcat server port()(https)
+
+Create a controller:
+•	src/main/java->create a new class
+•	Source Folder:example/src/main/java
+•	Package: com.example.example.contoller
+•	Name: MyController {name of your controller}
+•	Finish
+•	MyController.java package is created 
+
+•	Open MyController  and give annotation for the class as 
+
+@RestController
+This will automatically import controller package.
+
+@GetMapping(“/home”) is to tell the method to execute when home is requested
+
+ 	Code:
+package com.example.example.controller;
+import java.util.List;
+
+import org.springframwork.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.example.entities.Course;
+import com.example.example.service.CourseService;
+
+
+
+@RestController
+public class MyController{
+	
+	@Autowired //interface will create object for the implementation
+	private CourseService courseservice;
+
+	//to go to home page
+	@GetMapping(“/home”)    
+	public String home()
+	{
+		return “This is a home page” }}
+
+	//to get the all list of courses
+	@GetMapping(“/Courses”)
+	public List<Course> getCourses()
+	{
+		return this.courseservice.getCourses();
+}
+
+@GetMapping(“/Courses/{course_ID}”)
+//to get particular course
+public Course getCourse(@PathVariable String course_ID )
+{
+	return this.courseservice.getCourse(course_ID);
+}
+
+@PostMapping(“/Courses”)
+//to add course
+public Course addCourse(@RequestBody Course course)
+{
+	return this.courseservice.addCourse(course);
+}
+Create Entities
+•	src/main/java->create a new class
+•	Source Folder:example/src/main/java
+•	Package: com.example.example.entities
+•	Name: Courses{name of your entity}
+•	Finish
+
+ 	Code:
+package com.springrest.springrest.entities;
+public class Course{
+	private long id;
+	private String Title;
+	private String description;
+// create a constructor
+//Go to Source ->Constructor using field -> Select all->Generate
+//create default constructor
+//create getters and setters
+//create tostring
+
+
+Create Services and Create service Interface
+•	src/main/java->create new interface
+•	Source Folder:example/src/main/java
+•	Package: com.example.example.services
+•	Name:CourseService
+•	Finish
+•	src/main/java->create a new class
+•	Source Folder:example/src/main/java
+•	Package: com.example.example.services
+•	Name: CourseServiceImpl{name of your service}
+•	Add the above interface(CourseService)
+•	Finish
+
+CourseService.java 
+ 	code
+package com.example.example.services;
+import java.util.List;
+import com.example.example.entities.Courses;
+//import courses entity
+public interface CourseService{
+	public List<Course> getCourses(); //calling  the method
+	public Course getCourse(course_ID);
+	public Course addCourse(Course course);
+}
+CourseServiceImpl.java
+ 	Code
+package com.example.example.services;
+import java.util.List;
+import java.util.ArrayList;
+import org.springframework.stereotype.Services;
+import org.example.example.entities.Courses;
+@Service
+public class CourseServiceImpl implements CourseService{
+	List<Course>  list;
+	public CourseServiceImpl(){
+		list=new ArrayList<>();
+		list.add(new Course(145, “Java Core” , “Basics of Java”));
+		list.add(new Course (146, “Python”, “Basics of Python”));
+		
+	@Override
+	public List<Course> getCourses(){
+		return list;
+	}
+
+	@Override
+	public Course getCourse(course_ID){
+		Course c=null;
+		for (Course course : list ){
+			if (course.getId()==course_ID){
+		 		c=course;
+				break;
+			}
+		}
+		return c;
+	}
+	public Course addCourse(Course course){
+		list.add(course);
+		return course;
+	}
+}
+
+
+		
+ 	PostMan	
+Get localhost:8080/courses
+Get localhost:8080/courses/145
+Post localhost:8080/courses
+	{	“id”:48
+		“title”:”React”
+		“description”:”this is react course”
+}
